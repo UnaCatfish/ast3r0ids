@@ -18,7 +18,7 @@ Ship.prototype.update = function () {
   this.thrust.setAngle(this.angle);
 
   if (thrusting) {
-    this.thrust.setLength(0.11);
+    this.thrust.setLength(0.06);
   } else {
     this.thrust.setLength(0);
   }

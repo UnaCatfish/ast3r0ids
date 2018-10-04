@@ -1,6 +1,6 @@
 
-const defaultScale = 8;
-const speed = 0.2;
+const defaultScale = 9;
+const speed = 0.3;
 
 function Asteroid(x, y, scale) {
   this.x = x || Math.floor(Math.random() * canvas.width);
@@ -9,8 +9,9 @@ function Asteroid(x, y, scale) {
   this.color = '#eee'
 
   this.particle = particle.create(this.x, this.y, 0, 0, 0);
-  this.particle.velocity.setLength(speed + (defaultScale / this.scale) * 0.05);
+  this.particle.velocity.setLength(speed + (defaultScale / this.scale) * 0.1);
   this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
+  console.log(this.particle.velocity.getLength(), this.scale);
 
   this.rockIndex = Math.floor(Math.random() * rockData.length);
   this.shape = this.makeRock(this.rockIndex, this.scale);

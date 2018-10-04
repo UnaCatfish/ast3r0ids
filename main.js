@@ -5,10 +5,10 @@
 window.onload = function () {
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
-  const width = canvas.width = window.innerWidth;
-  const height = canvas.height = window.innerHeight;
+  const width = canvas.width = window.innerWidth = 480;
+  const height = canvas.height = window.innerHeight = 360;
   const ship = new Ship(width / 2, height / 2);
-  const numRocks = 8;
+  const numRocks = 6;
   const asteroids = [];
   const lasers = [];
   const bgColor = "#000";
@@ -57,9 +57,9 @@ window.onload = function () {
             asteroids.splice(j, 1);
             lasers.splice(i, 1);
 
-            if (scale > 1) {
-              asteroids.push(new Asteroid(loc[0], loc[1], scale / 2));
-              asteroids.push(new Asteroid(loc[0], loc[1], scale / 2));
+            if (scale > 2) {
+              asteroids.push(new Asteroid(loc[0], loc[1], scale / 3));
+              asteroids.push(new Asteroid(loc[0], loc[1], scale / 3));
             }
 
 
