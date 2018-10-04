@@ -1,5 +1,5 @@
 
-const defaultScale = 2;
+const defaultScale = 8;
 const speed = 0.2;
 
 function Asteroid(x, y, scale) {
@@ -9,7 +9,7 @@ function Asteroid(x, y, scale) {
   this.color = '#eee'
 
   this.particle = particle.create(this.x, this.y, 0, 0, 0);
-  this.particle.velocity.setLength(0.2);
+  this.particle.velocity.setLength(speed + (defaultScale / this.scale) * 0.05);
   this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
 
   this.rockIndex = Math.floor(Math.random() * rockData.length);
@@ -61,4 +61,8 @@ Asteroid.prototype.edges = function () {
 
 Asteroid.prototype.getLocation = function () {
   return [this.particle.position.getX(), this.particle.position.getY()];
+}
+
+Asteroid.prototype.getScale = function () {
+  return this.scale;
 }
