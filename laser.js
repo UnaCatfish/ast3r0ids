@@ -11,10 +11,8 @@ function Laser(location, angle) {
 Laser.prototype.draw = function (context) {
   context.save();
   context.translate(this.particle.position.getX(), this.particle.position.getY());
-  context.fillStyle = "#00  ";
   context.beginPath();
   context.arc(0, 0, 1, 0, Math.PI * 2, false);
-  context.fill();
   context.stroke();
   context.restore()
 }

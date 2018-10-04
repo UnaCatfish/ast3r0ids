@@ -1,13 +1,15 @@
 
-const defaultScale = 8;
+const defaultScale = 2;
+const speed = 0.2;
 
 function Asteroid(x, y, scale) {
   this.x = x || Math.floor(Math.random() * canvas.width);
   this.y = y || Math.floor(Math.random() * canvas.height);
   this.scale = scale || defaultScale;
+  this.color = '#eee'
 
   this.particle = particle.create(this.x, this.y, 0, 0, 0);
-  this.particle.velocity.setLength(0.3);
+  this.particle.velocity.setLength(0.2);
   this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
 
   this.rockIndex = Math.floor(Math.random() * rockData.length);
@@ -22,15 +24,18 @@ Asteroid.prototype.makeRock = function (index, scale) {
   return result;
 }
 
+
 Asteroid.prototype.draw = function (context) {
   context.save();
   context.translate(this.particle.position.getX(), this.particle.position.getY());
-  context.strokeStyle = "#eee";
+  // context.strokeStyle = "#eee";
+  context.strokeStyle = this.color;
   context.beginPath();
   context.moveTo(this.shape[0][0], this.shape[0][1]);
   for (let i = 1; i < this.shape.length; i++) {
     context.lineTo(this.shape[i][0], this.shape[i][1]);
   }
+  context.fill();
   context.stroke();
   context.restore()
 }
@@ -54,3 +59,6 @@ Asteroid.prototype.edges = function () {
   }
 }
 
+Asteroid.prototype.getLocation = function () {
+  return [this.particle.position.getX(), this.particle.position.getY()];
+}
