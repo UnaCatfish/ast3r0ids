@@ -46,7 +46,7 @@ Ship.prototype.draw = function (context) {
   context.save();
   context.translate(this.particle.position.getX(), this.particle.position.getY());
   context.rotate(this.angle);
-
+  context.fillStyle = "#000";
   context.beginPath();
   context.moveTo(10, 0);
   context.lineTo(-10, -7);
@@ -58,7 +58,9 @@ Ship.prototype.draw = function (context) {
     context.lineTo(-17, 0);
     context.lineTo(-10, 3);
   }
+  context.fill();
   context.stroke();
+
   context.restore()
 }
 

@@ -21,7 +21,7 @@ function inputInit(lasers, ship) {
 
       case 32: // Space
         lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
-        console.log(ship.getLocation(), ship.getHeading());
+        // console.log(ship.getLocation(), ship.getHeading());
         break;
 
       default:

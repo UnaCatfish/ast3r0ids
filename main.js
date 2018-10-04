@@ -29,9 +29,7 @@ window.onload = function () {
     context.fillRect(0, 0, width, height);
     ////////////////// ANIMATION ///////////////////////
 
-    ship.update();
-    ship.draw(context);
-    ship.edges();
+
 
     for (let asteroid of asteroids) {
       asteroid.draw(context);
@@ -39,11 +37,29 @@ window.onload = function () {
       asteroid.edges();
     }
 
-    for (let laser of lasers) {
-      // laser.draw(context);
-      // laser.update();
-      // laser.hit();
+    // console.log(lasers[0]);
+
+    for (let i = lasers.length - 1; i >= 0; i--) {
+      lasers[i].draw(context);
+      lasers[i].update();
+      if (!lasers[i].edges()) {
+        lasers.splice(i, 1);
+        console.log(lasers.length);
+      }
     }
+
+    // for (let laser of lasers) {
+    //   laser.draw(context);
+    //   laser.update();
+    //   if (laser.edges()) {
+    //     console.log('remove');
+
+    //   }
+    // }
+
+    ship.update();
+    ship.draw(context);
+    ship.edges();
 
     /////////////////////////////////////////////////// 
     requestAnimationFrame(update);
