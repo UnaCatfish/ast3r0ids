@@ -2,28 +2,35 @@
 let turningLeft = false;
 let turningRight = false;
 let thrusting = false;
-let down = false;
+let fire = false;
 
 function inputInit(lasers, ship) {
   document.body.addEventListener("keydown", function (event) {
     // console.log(event.keyCode);
     switch (event.keyCode) {
       case 38: // Up
+      case 87: // W
+        if (thrusting) return;
         thrusting = true;
         break;
 
       case 37: // Left
+      case 65: // A
+        if (turningLeft) return;
         turningLeft = true;
         break;
 
       case 39: // Right
+      case 68: // D
+        if (turningRight) return;
         turningRight = true
         break;
 
       case 32: // Space
       case 90: // Z
-        if (down) return;
-        down = true;
+      case 76: // L
+        if (fire) return;
+        fire = true;
         lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
         break;
 
@@ -36,20 +43,24 @@ function inputInit(lasers, ship) {
     // console.log(event.keyCode);
     switch (event.keyCode) {
       case 38: // Up
+      case 87: // W
         thrusting = false;
         break;
 
       case 37: // Left
+      case 65: // A
         turningLeft = false;
         break;
 
       case 39: // Right
+      case 68: // D
         turningRight = false;
         break;
 
-      case 90:
       case 32: // Space
-        down = false;
+      case 90: // Z
+      case 76: // L
+        fire = false;
         break;
 
       default:
