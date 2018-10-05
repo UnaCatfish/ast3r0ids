@@ -1,36 +1,42 @@
 
 const defaultScale = 9;
-const speed = 0.3;
+const speed = 0.05;
 
 function Asteroid(x, y, scale) {
   this.x = x || Math.floor(Math.random() * canvas.width);
   this.y = y || Math.floor(Math.random() * canvas.height);
   this.scale = scale || defaultScale;
-  this.color = '#eee'
 
   this.particle = particle.create(this.x, this.y, 0, 0, 0);
-  this.particle.velocity.setLength(speed + (defaultScale / this.scale) * 0.1);
+  this.particle.velocity.setLength(speed + defaultScale / this.scale * 0.1);
   this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
-  console.log(this.particle.velocity.getLength(), this.scale);
 
   this.rockIndex = Math.floor(Math.random() * rockData.length);
-  this.shape = this.makeRock(this.rockIndex, this.scale);
+  this.shape = this.makeShape(this.rockIndex, this.scale);
+  this.shapeCollide = this.makeShape(this.rockIndex, this.scale, 3);
+  console.log(this.shape);
+  console.log(this.shapeCollide);
+
 }
 
-Asteroid.prototype.makeRock = function (index, scale) {
+// makes a shape with or without an offset, 
+// offset used for collision detection allowing for line widths
+Asteroid.prototype.makeShape = function (index, scale, offset) {
   const result = [];
+  const off = offset || 0;
   for (let line of rockData[index]) {
-    result.push([line[0] * scale, line[1] * scale]);
+    let off0 = Math.sign(line[0]) * off;
+    let off1 = Math.sign(line[1]) * off;
+    result.push([line[0] * scale + off0, line[1] * scale + off1]);
   }
   return result;
 }
 
-
 Asteroid.prototype.draw = function (context) {
+  // console.log(Math.floor(this.particle.position.getX()), this.particle.position.getY());
+
   context.save();
   context.translate(this.particle.position.getX(), this.particle.position.getY());
-  // context.strokeStyle = "#eee";
-  context.strokeStyle = this.color;
   context.beginPath();
   context.moveTo(this.shape[0][0], this.shape[0][1]);
   for (let i = 1; i < this.shape.length; i++) {

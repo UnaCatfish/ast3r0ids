@@ -13,6 +13,8 @@ window.onload = function () {
   const lasers = [];
   const bgColor = "#000";
   const lineColor = "#eee";
+  context.lineWidth = 2;
+
 
   function setup() {
     context.fillStyle = bgColor;
@@ -50,7 +52,7 @@ window.onload = function () {
         for (let j = asteroids.length - 1; j >= 0; j--) {
           // console.log(lasers.length, i);
 
-          if (lasers[i] && pnpoly(lasers[i].particle.position, asteroids[j].shape, asteroids[j].getLocation())) {
+          if (lasers[i] && pnpoly(lasers[i].particle.position, asteroids[j].shapeCollide, asteroids[j].getLocation())) {
             asteroids[j].color = 'red'
             const loc = asteroids[j].getLocation();
             const scale = asteroids[j].getScale();
