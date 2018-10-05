@@ -3,24 +3,28 @@
 window.onload = function () {
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
-  const width = canvas.width = window.innerWidth = 480;
-  const height = canvas.height = window.innerHeight = 360;
+  const width = canvas.width = window.innerWidth;
+  const height = canvas.height = window.innerHeight;
   const ship = new Ship(width / 2, height / 2);
   const asteroids = [];
   const lasers = [];
-  const numRocks = 6;
+  const numRocks = 1;
   const bgColor = "#000";
   const lineColor = "#eee";
   const lineWidth = 1;
 
   function setup() {
+    data.preload();
     context.fillStyle = bgColor;
     context.strokeStyle = lineColor;
     context.lineWidth = lineWidth;
 
     for (let i = 0; i < numRocks; i++) {
-      asteroids.push(new Asteroid());
+      const xx = Math.floor(Math.random() * canvas.width);
+      const yy = Math.floor(Math.random() * canvas.height);
+      asteroids.push(new Asteroid(xx, yy));
     }
+
     inputInit(lasers, ship)
     update();
   }
@@ -30,11 +34,9 @@ window.onload = function () {
     ////////////////// ANIMATION ///////////////////////
 
     for (let asteroid of asteroids) {
-
       asteroid.draw(context);
       asteroid.update();
       asteroid.edges();
-      asteroid.color = lineColor;
     }
 
     for (let i = lasers.length - 1; i >= 0; i--) {
@@ -49,28 +51,36 @@ window.onload = function () {
       if (lasers.length > 0) {
         for (let j = asteroids.length - 1; j >= 0; j--) {
 
-          if (lasers[i] && pnpoly(lasers[i].particle.position, asteroids[j].shapeCollide, asteroids[j].getLocation())) {
+          if (lasers[i] && lasertoAsteroid(lasers[i], asteroids[j])) {
             asteroids[j].color = 'red'
             const loc = asteroids[j].getLocation();
-            const scale = asteroids[j].getScale();
+            const size = asteroids[j].getSize();
             asteroids.splice(j, 1);
             lasers.splice(i, 1);
 
-            if (scale > 2) {
-              asteroids.push(new Asteroid(loc[0], loc[1], scale / 3));
-              asteroids.push(new Asteroid(loc[0], loc[1], scale / 3));
+            if (!size == 0) {
+              asteroids.push(new Asteroid(loc[0], loc[1], size - 1));
+              asteroids.push(new Asteroid(loc[0], loc[1], size - 1));
             }
           }
         }
       }
     }
 
+
+
+
+
     ship.update();
     ship.draw(context);
     ship.edges();
-
     /////////////////////////////////////////////////// 
-    requestAnimationFrame(update);
+    if (!asteroids.length) {
+      context.fillRect(0, 0, width, height);
+      console.log('Winner, winner, chicken dinner');
+    } else {
+      requestAnimationFrame(update);
+    }
   }
   setup();
 };

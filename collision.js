@@ -1,38 +1,39 @@
+function lasertoAsteroid(laser, asteroid) {
 
-function pnpoly(pn, polygon, origin) {
   var isInside = false;
 
-  const ox = origin[0];
-  const oy = origin[1];
-  const px = pn.getX();
-  const py = pn.getY();
+  const box = data.rock[asteroid.index].box[asteroid.size]
+  const ax = asteroid.getX();
+  const ay = asteroid.getY();
+  const px = laser.getX();
+  const py = laser.getY();
+  // const px = mx;
+  // const py = my;
 
-  // Create a boundary box for polygon
-  var minX = 0, maxX = 0, minY = 0, maxY = 0;
+  // console.log('#####');
+  // console.log('mx:' + mx);
+  // console.log('my:' + my);
+  // console.log('ax:' + ax);
+  // console.log('ay:' + ay);
+  // console.log('maxY:' + box.maxY);
+  // console.log('my- ay:' + (my - ay));
 
-  for (var n = 0; n < polygon.length; n++) {
-    var q = polygon[n];
-    minX = Math.min(q[0], minX);
-    maxX = Math.max(q[0], maxX);
-    minY = Math.min(q[1], minY);
-    maxY = Math.max(q[1], maxY);
-  }
-
-  // quick check if pn outside of boundary box
   if (
-    px - ox < minX || px - ox > maxX ||
-    py - oy < minY || py - oy > maxY) {
+    px - ax < box.minX || px - ax > box.maxX ||
+    py - ay < box.minY || py - ay > box.maxY) {
+    // console.log('fail');
     return false;
   }
+  const polygon = data.rock[asteroid.index].collision[asteroid.size];
 
   // Check if point is inside the polygon
   var i = 0, j = polygon.length - 1;
   for (i, j; i < polygon.length; j = i++) {
 
-    const ix = polygon[i][0] + ox;
-    const iy = polygon[i][1] + oy;
-    const jx = polygon[j][0] + ox;
-    const jy = polygon[j][1] + oy;
+    const ix = polygon[i][0] + ax;
+    const iy = polygon[i][1] + ay;
+    const jx = polygon[j][0] + ax;
+    const jy = polygon[j][1] + ay;
 
     // the magic algorythm 
     if ((iy > py) != (jy > py) &&
@@ -42,3 +43,23 @@ function pnpoly(pn, polygon, origin) {
   }
   return isInside;
 }
+
+
+// var mx, my;
+
+// document.addEventListener('mousemove', onMouseUpdate, false);
+// document.addEventListener('mouseenter', onMouseUpdate, false);
+
+// function onMouseUpdate(e) {
+//   mx = e.pageX;
+//   my = e.pageY;
+//   // console.log(mx, my);
+// }
+
+// function getMouseX() {
+//   return mx;
+// }
+
+// function getMouseY() {
+//   return my;
+// }

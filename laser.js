@@ -31,3 +31,10 @@ Laser.prototype.edges = function () {
   return this.isAlive;
 }
 
+Laser.prototype.getX = function () {
+  return this.particle.position.getX();
+}
+
+Laser.prototype.getY = function () {
+  return this.particle.position.getY();
+}

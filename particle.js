@@ -18,7 +18,6 @@ const particle = {
     obj.velocity.setLength(speed);
     obj.velocity.setAngle(direction);
     obj.gravity = vector.create(0, grav || 0); // the 'or' makes it  optional
-
     return obj;
   },
 

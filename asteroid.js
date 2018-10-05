@@ -1,47 +1,63 @@
+const defaultsize = 2;
+const speed = 0.3;
 
-const defaultScale = 9;
-const speed = 0.05;
+// for debugging
+const showBox = false;
+const showCollide = false;
 
-function Asteroid(x, y, scale) {
+function Asteroid(x, y, size) {
   this.x = x || Math.floor(Math.random() * canvas.width);
   this.y = y || Math.floor(Math.random() * canvas.height);
-  this.scale = scale || defaultScale;
-
+  this.size = size >= 0 ? size : defaultsize;
   this.particle = particle.create(this.x, this.y, 0, 0, 0);
-  this.particle.velocity.setLength(speed + defaultScale / this.scale * 0.1);
+  this.particle.velocity.setLength(speed + (defaultsize - this.size) * 0.3);
   this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
-
-  this.rockIndex = Math.floor(Math.random() * rockData.length);
-  this.shape = this.makeShape(this.rockIndex, this.scale);
-  this.shapeCollide = this.makeShape(this.rockIndex, this.scale, 3);
+  this.index = Math.floor(Math.random() * data.rock.length);
 }
 
-// makes a shape with or without an offset, 
-// offset used for collision detection allowing for line widths
-Asteroid.prototype.makeShape = function (index, scale, offset) {
-  const result = [];
-  const off = offset || 0;
-  for (let line of rockData[index]) {
-    let off0 = Math.sign(line[0]) * off;
-    let off1 = Math.sign(line[1]) * off;
-    result.push([line[0] * scale + off0, line[1] * scale + off1]);
-  }
-  return result;
-}
 
 Asteroid.prototype.draw = function (context) {
-  // console.log(Math.floor(this.particle.position.getX()), this.particle.position.getY());
+  const poly = data.rock[this.index].raw[this.size];
+  const coll = data.rock[this.index].collision[this.size];
+  const box = data.rock[this.index].box[this.size];
 
   context.save();
   context.translate(this.particle.position.getX(), this.particle.position.getY());
   context.beginPath();
-  context.moveTo(this.shape[0][0], this.shape[0][1]);
-  for (let i = 1; i < this.shape.length; i++) {
-    context.lineTo(this.shape[i][0], this.shape[i][1]);
+  context.strokeStyle = '#eee';
+  context.moveTo(poly[0][0], poly[0][1]);
+  for (let i = 1; i < poly.length; i++) {
+    context.lineTo(poly[i][0], poly[i][1]);
   }
-  context.fill();
   context.stroke();
   context.restore()
+
+  if (showCollide) {
+    context.save();
+    context.translate(this.particle.position.getX(), this.particle.position.getY());
+    context.beginPath();
+    context.strokeStyle = '#0f0';
+    context.moveTo(coll[0][0], coll[0][1]);
+    for (let i = 1; i < coll.length; i++) {
+      context.lineTo(coll[i][0], coll[i][1]);
+    }
+    context.stroke();
+    context.restore()
+  }
+
+  if (showBox) {
+    context.save();
+    context.translate(this.particle.position.getX(), this.particle.position.getY());
+    context.beginPath();
+    context.strokeStyle = '#f00';
+    context.moveTo(box.minX, box.minY);
+    context.lineTo(box.maxX, box.minY);
+    context.lineTo(box.maxX, box.maxY);
+    context.lineTo(box.minX, box.maxY);
+    context.lineTo(box.minX, box.minY);
+    context.stroke();
+    context.restore()
+  }
 }
 
 Asteroid.prototype.update = function () {
@@ -67,6 +83,14 @@ Asteroid.prototype.getLocation = function () {
   return [this.particle.position.getX(), this.particle.position.getY()];
 }
 
-Asteroid.prototype.getScale = function () {
-  return this.scale;
+Asteroid.prototype.getSize = function () {
+  return this.size;
+}
+
+Asteroid.prototype.getX = function () {
+  return this.particle.position.getX();
+}
+
+Asteroid.prototype.getY = function () {
+  return this.particle.position.getY();
 }

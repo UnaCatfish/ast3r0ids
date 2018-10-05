@@ -27,8 +27,7 @@ function inputInit(lasers, ship) {
         break;
 
       case 32: // Space
-      case 90: // Z
-      case 76: // L
+      case 17: // Ctrl
         if (fire) return;
         fire = true;
         lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
@@ -58,8 +57,7 @@ function inputInit(lasers, ship) {
         break;
 
       case 32: // Space
-      case 90: // Z
-      case 76: // L
+      case 17: // Ctrl
         fire = false;
         break;
 
