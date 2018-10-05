@@ -14,9 +14,6 @@ function Asteroid(x, y, scale) {
   this.rockIndex = Math.floor(Math.random() * rockData.length);
   this.shape = this.makeShape(this.rockIndex, this.scale);
   this.shapeCollide = this.makeShape(this.rockIndex, this.scale, 3);
-  console.log(this.shape);
-  console.log(this.shapeCollide);
-
 }
 
 // makes a shape with or without an offset, 

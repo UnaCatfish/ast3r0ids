@@ -1,24 +1,22 @@
 'use strict'
 
-// const asteroids = [];
-
 window.onload = function () {
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
   const width = canvas.width = window.innerWidth = 480;
   const height = canvas.height = window.innerHeight = 360;
   const ship = new Ship(width / 2, height / 2);
-  const numRocks = 6;
   const asteroids = [];
   const lasers = [];
+  const numRocks = 6;
   const bgColor = "#000";
   const lineColor = "#eee";
-  context.lineWidth = 2;
-
+  const lineWidth = 1;
 
   function setup() {
     context.fillStyle = bgColor;
     context.strokeStyle = lineColor;
+    context.lineWidth = lineWidth;
 
     for (let i = 0; i < numRocks; i++) {
       asteroids.push(new Asteroid());
@@ -50,7 +48,6 @@ window.onload = function () {
       // check against rocks
       if (lasers.length > 0) {
         for (let j = asteroids.length - 1; j >= 0; j--) {
-          // console.log(lasers.length, i);
 
           if (lasers[i] && pnpoly(lasers[i].particle.position, asteroids[j].shapeCollide, asteroids[j].getLocation())) {
             asteroids[j].color = 'red'
@@ -63,13 +60,10 @@ window.onload = function () {
               asteroids.push(new Asteroid(loc[0], loc[1], scale / 3));
               asteroids.push(new Asteroid(loc[0], loc[1], scale / 3));
             }
-
-
           }
         }
       }
     }
-
 
     ship.update();
     ship.draw(context);
