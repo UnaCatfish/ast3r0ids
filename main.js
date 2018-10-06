@@ -8,7 +8,7 @@ window.onload = function () {
   const ship = new Ship(width / 2, height / 2);
   const asteroids = [];
   const lasers = [];
-  const numRocks = 1;
+  const numRocks = 3;
   const bgColor = "#000";
   const lineColor = "#eee";
   const lineWidth = 1;
@@ -19,12 +19,7 @@ window.onload = function () {
     context.strokeStyle = lineColor;
     context.lineWidth = lineWidth;
 
-    for (let i = 0; i < numRocks; i++) {
-      const xx = Math.floor(Math.random() * canvas.width);
-      const yy = Math.floor(Math.random() * canvas.height);
-      asteroids.push(new Asteroid(xx, yy));
-    }
-
+    makeRocks();
     inputInit(lasers, ship)
     update();
   }
@@ -67,20 +62,25 @@ window.onload = function () {
       }
     }
 
-
-
-
-
     ship.update();
     ship.draw(context);
     ship.edges();
-    /////////////////////////////////////////////////// 
+
     if (!asteroids.length) {
-      context.fillRect(0, 0, width, height);
       console.log('Winner, winner, chicken dinner');
-    } else {
-      requestAnimationFrame(update);
+      makeRocks();
+    }
+    /////////////////////////////////////////////////// 
+    requestAnimationFrame(update);
+  }
+
+  function makeRocks() {
+    for (let i = 0; i < numRocks; i++) {
+      const ax = Math.floor(Math.random() * canvas.width);
+      const ay = Math.floor(Math.random() * canvas.height);
+      asteroids.push(new Asteroid(ax, ay));
     }
   }
+
   setup();
 };

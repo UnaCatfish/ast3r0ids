@@ -15,7 +15,6 @@ function Asteroid(x, y, size) {
   this.index = Math.floor(Math.random() * data.rock.length);
 }
 
-
 Asteroid.prototype.draw = function (context) {
   const poly = data.rock[this.index].raw[this.size];
   const coll = data.rock[this.index].collision[this.size];

@@ -46,7 +46,7 @@ Ship.prototype.draw = function (context) {
   context.save();
   context.translate(this.particle.position.getX(), this.particle.position.getY());
   context.rotate(this.angle);
-  context.fillStyle = "#000";
+  // context.fillStyle = "#000"; 
   context.beginPath();
   context.moveTo(10, 0);
   context.lineTo(-10, -7);
@@ -58,7 +58,7 @@ Ship.prototype.draw = function (context) {
     context.lineTo(-17, 0);
     context.lineTo(-10, 3);
   }
-  context.fill();
+  // context.fill();
   context.stroke();
 
   context.restore()
@@ -70,4 +70,8 @@ Ship.prototype.getHeading = function () {
 
 Ship.prototype.getLocation = function () {
   return this.particle.position;
+}
+
+Ship.prototype.getLaser = function () {
+  return 10;
 }

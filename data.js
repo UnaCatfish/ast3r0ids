@@ -5,22 +5,26 @@ const rockData = [
   [[-5, -3], [-1, -3], [-2, -5], [2, -5], [5, -3], [5, -1], [1, 0], [5, 3], [3, 5], [1, 4], [-3, 5], [-5, 1], [-5, -3]]
 ];
 
+const shipData = [
+  [[10, 0], [-10, -7], [-10, 7], [10, 0]],
+  [[-10, -3], [-17, 0], [-10, 3]]
+];
+
 const scalefactor = 3;
+const collisionSize = 2;
 
 const data = {
   rock: [],
-
-  ship: {
-    raw: null,
-    collision: null,
-    box: null
-  },
-
-  ufo: [
-
-  ],
+  ship: [],
 
   preload: function () {
+
+    const ship = new Object();
+    ship.raw = [this.factor(shipData[0], 1)];
+    ship.collision = [this.factor(shipData[0], 1, collisionSize)];
+    ship.box = [this.boundbox(ship.collision[0])]
+    ship.thrust = [shipData[1]];
+    this.ship.push(ship);
 
     for (const row of rockData) {
       const entry = new Object();
@@ -29,7 +33,7 @@ const data = {
       const _box = []
       for (let i = 0; i < 3; i++) {
         _raw.push(this.factor(row, i * scalefactor));
-        _col.push(this.factor(row, i * scalefactor, 2));
+        _col.push(this.factor(row, i * scalefactor, collisionSize));
         _box.push(this.boundbox(_col[i]));
       }
       entry.raw = _raw;
