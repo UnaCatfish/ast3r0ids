@@ -1,10 +1,6 @@
 const defaultsize = 2;
 const speed = 0.3;
 
-// for debugging
-const showBox = false;
-const showCollide = false;
-
 function Asteroid(x, y, size) {
   this.x = x || Math.floor(Math.random() * canvas.width);
   this.y = y || Math.floor(Math.random() * canvas.height);
@@ -16,8 +12,6 @@ function Asteroid(x, y, size) {
   this.particle.velocity.setLength(speed + (defaultsize - this.size) * 0.3);
   // this.particle.velocity.setLength(0);
   ////////////////////////////////////
-
-
 
   this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
   this.index = Math.floor(Math.random() * data.rock.length);
@@ -52,7 +46,7 @@ Asteroid.prototype.draw = function (context) {
     context.restore()
   }
 
-  if (showBox) {
+  if (debug) {
     context.save();
     context.translate(this.particle.position.getX(), this.particle.position.getY());
     context.beginPath();

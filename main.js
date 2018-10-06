@@ -1,5 +1,6 @@
 'use strict'
-
+const debug = true;
+const showCollide = false;
 
 
 window.onload = function () {
