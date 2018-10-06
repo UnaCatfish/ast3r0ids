@@ -6,7 +6,7 @@ let fire = false;
 
 function inputInit(lasers, ship) {
   document.body.addEventListener("keydown", function (event) {
-    // console.log(event.keyCode);
+
     switch (event.keyCode) {
       case 38: // Up
       case 87: // W
@@ -30,7 +30,9 @@ function inputInit(lasers, ship) {
       case 17: // Ctrl
         if (fire) return;
         fire = true;
-        lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
+        if (ship.alive) {
+          lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
+        }
         break;
 
       default:
@@ -39,7 +41,7 @@ function inputInit(lasers, ship) {
   }, false);
 
   document.body.addEventListener("keyup", function (event) {
-    // console.log(event.keyCode);
+
     switch (event.keyCode) {
       case 38: // Up
       case 87: // W

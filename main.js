@@ -15,6 +15,7 @@ window.onload = function () {
   const bgColor = "#000";
   const lineColor = "#eee";
   const lineWidth = 1;
+  const respawnTime = 2000;
 
   function setup() {
     data.preload();
@@ -25,12 +26,22 @@ window.onload = function () {
     makeRocks();
     inputInit(lasers, ship)
 
+    //////////////////
+
     update();
+  }
+
+  function respawn() {
+    ship.reset();
   }
 
   function update() {
     context.fillRect(0, 0, width, height);
     ////////////////// ANIMATION Loop ////////////////////
+
+    if (!ship.alive) {
+
+    }
 
     for (let asteroid of asteroids) {
       asteroid.draw(context);
@@ -70,7 +81,7 @@ window.onload = function () {
 
 
     // draw, update and check ship
-    if (ship) {
+    if (ship.alive) {
       ship.update();
       ship.draw(context);
       ship.edges();
@@ -83,14 +94,17 @@ window.onload = function () {
             const loc = ship.getLocation();
             explosions.push(new Explosion([check.x, check.y]));
             // shipHit++;
-            ship = null;
+            ship.alive = false;
             console.log('loser');
-
+            setTimeout(respawn, respawnTime)
             break;
           }
         }
       }
+
     }
+
+
 
     if (!asteroids.length) {
       console.log('Winner, winner, chicken dinner');
@@ -109,6 +123,8 @@ window.onload = function () {
       });
 
     }
+
+
 
     /////////////////////// End Loop /////////////////////// 
     requestAnimationFrame(update);

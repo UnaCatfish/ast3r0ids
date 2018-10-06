@@ -15,6 +15,7 @@ function shipToAsteroid(ship, asteroid) {
   ) {
     return false;
   }
+  shipHit++;
   return polyToPoly(asteroid.getPoly(), ship.getPoly(),
     asteroid.getLocation(), ship.getLocation());
 }
@@ -67,7 +68,7 @@ function segmentIntersect(p0, p1, p2, p3) {
       x: intersectX,
       y: intersectY
     };
-    true
+
   }
   else {
     return null;

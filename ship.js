@@ -6,6 +6,18 @@ function Ship(x, y) {
   this.particle.friction = friction;
   this.thrust = vector.create(0, 0);
   this.angle = 0;
+  this.alive = true;
+}
+
+Ship.prototype.reset = function () {
+  this.setLocation(canvas.width / 2, canvas.height / 2)
+  this.thrust.multiplyBy(0)
+  this.particle.velocity.multiplyBy(0);
+  this.angle = 0;
+  this.alive = true;
+  turningLeft = false;
+  turningRight = false;
+  thrusting = false;
 }
 
 Ship.prototype.update = function () {
@@ -62,7 +74,6 @@ Ship.prototype.draw = function (context) {
       context.lineTo(thrust[i][0], thrust[i][1]);
     }
   }
-  context.strokeStyle = shipHit ? "#f00" : "#eee";
   context.stroke();
   context.restore()
 
@@ -88,8 +99,13 @@ Ship.prototype.getHeading = function () {
   return this.angle;
 }
 
+
 Ship.prototype.getLocation = function () {
   return [this.particle.position.getX(), this.particle.position.getY()];
+}
+
+Ship.prototype.setLocation = function (x, y) {
+  this.particle.position.setX(x), this.particle.position.setY(y);
 }
 
 Ship.prototype.getLaser = function () {
