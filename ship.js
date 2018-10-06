@@ -1,7 +1,6 @@
 const friction = 0.994;
 let shipHit;
 
-
 function Ship(x, y) {
   this.particle = particle.create(x, y, 0, 0, 0);
   this.particle.friction = friction;
@@ -45,23 +44,25 @@ Ship.prototype.edges = function () {
 }
 
 Ship.prototype.draw = function (context) {
+  const poly = this.getRaw();
+  const thrust = this.getThrust();
+
   context.save();
   context.translate(this.particle.position.getX(), this.particle.position.getY());
   context.rotate(this.angle);
-
-  // context.fillStyle = shipHit ? "#f50" : "#000";
   context.beginPath();
-  context.moveTo(10, 0);
-  context.lineTo(-10, -7);
-  context.lineTo(-10, 7);
-  context.lineTo(10, 0);
+  context.moveTo(poly[0][0], poly[0][1]);
+  for (let i = 1; i < poly.length; i++) {
+    context.lineTo(poly[i][0], poly[i][1]);
+  }
 
   if (thrusting) {
-    context.moveTo(-10, -3);
-    context.lineTo(-17, 0);
-    context.lineTo(-10, 3);
+    context.moveTo(thrust[0][0], thrust[0][1]);
+    for (let i = 1; i < thrust.length; i++) {
+      context.lineTo(thrust[i][0], thrust[i][1]);
+    }
   }
-  // context.fill();
+
   context.stroke();
   context.restore()
 
@@ -103,6 +104,18 @@ Ship.prototype.getY = function () {
   return this.particle.position.getY();
 }
 
+Ship.prototype.getRaw = function () {
+  return data.ship[0].raw[0];
+}
+
+Ship.prototype.getThrust = function () {
+  return data.ship[0].thrust[0];
+}
+
 Ship.prototype.getBox = function () {
   return data.ship[0].box[0];
+}
+
+Ship.prototype.getCollision = function () {
+  return data.ship[0].collision[0];
 }

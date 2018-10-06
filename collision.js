@@ -1,22 +1,20 @@
-var mx, my;
-document.addEventListener('mousemove', onMouseUpdate, false);
-document.addEventListener('mouseenter', onMouseUpdate, false);
+// var mx, my;
+// document.addEventListener('mousemove', onMouseUpdate, false);
+// document.addEventListener('mouseenter', onMouseUpdate, false);
 
-function onMouseUpdate(e) {
-  mx = e.pageX;
-  my = e.pageY;
-  // console.log(mx, my);
-}
+// function onMouseUpdate(e) {
+//   mx = e.pageX;
+//   my = e.pageY;
+//   // console.log(mx, my);
+// }
 
-function getMouseX() {
-  return mx;
-}
+// function getMouseX() {
+//   return mx;
+// }
 
-function getMouseY() {
-  return my;
-}
-
-
+// function getMouseY() {
+//   return my;
+// }
 
 function shipToAsteroid(ship, asteroid) {
   const abox = data.rock[asteroid.index].box[asteroid.size];
@@ -39,12 +37,8 @@ function shipToAsteroid(ship, asteroid) {
 }
 
 
-
-
-
-
 function lasertoAsteroid(laser, asteroid) {
-  const box = data.rock[asteroid.index].box[asteroid.size]
+  const box = asteroid.getBox();
   const pn = { x: laser.getX(), y: laser.getY() };
   const po = { x: asteroid.getX(), y: asteroid.getY() };
 
@@ -54,7 +48,7 @@ function lasertoAsteroid(laser, asteroid) {
     // console.log('fail');
     return false;
   }
-  const polygon = data.rock[asteroid.index].collision[asteroid.size];
+  const polygon = asteroid.getCollision();
   return pnPoly(pn, polygon, po);
 }
 
@@ -81,6 +75,3 @@ function pnPoly(pn, polygon, po) {
   }
   return isInside;
 }
-
-
-

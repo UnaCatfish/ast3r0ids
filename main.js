@@ -1,7 +1,6 @@
 'use strict'
 const debug = true;
-const showCollide = false;
-
+const showCollide = true;
 
 window.onload = function () {
   const canvas = document.getElementById('canvas');
@@ -16,8 +15,6 @@ window.onload = function () {
   const lineColor = "#eee";
   const lineWidth = 1;
 
-
-
   function setup() {
     data.preload();
     context.fillStyle = bgColor;
@@ -26,12 +23,19 @@ window.onload = function () {
 
     makeRocks();
     inputInit(lasers, ship)
+
+    ///////////////////// DEBUG ////////////////////////
+
+
+
+    ////////////////////////////////////////////////////
+
     update();
   }
 
   function update() {
     context.fillRect(0, 0, width, height);
-    ////////////////// ANIMATION ///////////////////////
+    ////////////////// ANIMATION Loop ////////////////////
 
     for (let asteroid of asteroids) {
       asteroid.draw(context);
@@ -84,7 +88,7 @@ window.onload = function () {
       console.log('Winner, winner, chicken dinner');
       makeRocks();
     }
-    /////////////////////////////////////////////////// 
+    /////////////////////// End Loop /////////////////////// 
     requestAnimationFrame(update);
   }
 
