@@ -44,7 +44,7 @@ Ship.prototype.edges = function () {
 }
 
 Ship.prototype.draw = function (context) {
-  const poly = this.getRaw();
+  const poly = this.getPoly();
   const thrust = this.getThrust();
 
   context.save();
@@ -89,7 +89,7 @@ Ship.prototype.getHeading = function () {
 }
 
 Ship.prototype.getLocation = function () {
-  return this.particle.position;
+  return [this.particle.position.getX(), this.particle.position.getY()];
 }
 
 Ship.prototype.getLaser = function () {
@@ -104,7 +104,7 @@ Ship.prototype.getY = function () {
   return this.particle.position.getY();
 }
 
-Ship.prototype.getRaw = function () {
+Ship.prototype.getPoly = function () {
   return data.ship[0].raw[0];
 }
 

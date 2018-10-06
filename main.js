@@ -1,6 +1,6 @@
 'use strict'
 const debug = true;
-const showCollide = true;
+const showCollide = false;
 
 window.onload = function () {
   const canvas = document.getElementById('canvas');
@@ -25,6 +25,25 @@ window.onload = function () {
     inputInit(lasers, ship)
 
     ///////////////////// DEBUG ////////////////////////
+
+    const polyB = ship.getPoly();
+    const originB = ship.getLocation();
+    // console.log(polyB);
+    // console.log(originB);
+
+    const linesB = [];
+    const linesO = [];
+
+    for (let j = 0; j < polyB.length - 1; j++) {
+
+      linesB.push([polyB[j][0], polyB[j][1], polyB[j + 1][0], polyB[j + 1][1]])
+      linesO.push([polyB[j][0] + originB[0], polyB[j][1] + originB[1],
+      polyB[j + 1][0] + originB[0], polyB[j + 1][1] + originB[1]])
+
+
+    }
+    // console.log(linesB);
+    console.log(linesO);
 
 
 

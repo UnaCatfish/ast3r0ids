@@ -1,6 +1,6 @@
 
 function Laser(location, angle, laser) {
-  this.position = vector.create(location.getX(), location.getY(), 0, angle, 0);
+  this.position = vector.create(location[0], location[1], 0, angle, 0);
   this.gun = vector.create(10, 0);
   this.gun.setAngle(angle);
   this.position.addTo(this.gun);
