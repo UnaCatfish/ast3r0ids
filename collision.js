@@ -94,7 +94,7 @@ function lineIntersect(lineA, lineB) {
     // if (i_y != null)
     i_y = p0_y + (t * s1_y);
 
-    console.log(i_x, i_y);
+    // console.log(i_x, i_y);
 
     return true;
   }

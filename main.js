@@ -1,5 +1,5 @@
 'use strict'
-const debug = true;
+const debug = false;
 const showCollide = false;
 
 window.onload = function () {
@@ -10,6 +10,7 @@ window.onload = function () {
   const ship = new Ship(width / 2, height / 2);
   const asteroids = [];
   const lasers = [];
+  const explosions = [];
   const numRocks = 6;
   const bgColor = "#000";
   const lineColor = "#eee";
@@ -25,26 +26,6 @@ window.onload = function () {
     inputInit(lasers, ship)
 
     ///////////////////// DEBUG ////////////////////////
-
-    const polyB = ship.getPoly();
-    const originB = ship.getLocation();
-    // console.log(polyB);
-    // console.log(originB);
-
-    const linesB = [];
-    const linesO = [];
-
-    for (let j = 0; j < polyB.length - 1; j++) {
-
-      linesB.push([polyB[j][0], polyB[j][1], polyB[j + 1][0], polyB[j + 1][1]])
-      linesO.push([polyB[j][0] + originB[0], polyB[j][1] + originB[1],
-      polyB[j + 1][0] + originB[0], polyB[j + 1][1] + originB[1]])
-
-
-    }
-    // console.log(linesB);
-    console.log(linesO);
-
 
 
     ////////////////////////////////////////////////////
@@ -81,6 +62,8 @@ window.onload = function () {
             asteroids.splice(j, 1);
             lasers.splice(i, 1);
 
+            explosions.push(new Explosion(loc, size));
+
             if (!size == 0) {
               asteroids.push(new Asteroid(loc[0], loc[1], size - 1));
               asteroids.push(new Asteroid(loc[0], loc[1], size - 1));
@@ -107,6 +90,22 @@ window.onload = function () {
       console.log('Winner, winner, chicken dinner');
       makeRocks();
     }
+
+    if (explosions.length) {
+      explosions.forEach((explosion, index) => {
+        explosion.draw(context);
+        explosion.update();
+        if (explosion.lifespan) {
+          explosion.lifespan--
+        } else {
+          explosions.splice(index, 1);
+        }
+      });
+
+    }
+
+
+
     /////////////////////// End Loop /////////////////////// 
     requestAnimationFrame(update);
   }
@@ -122,6 +121,8 @@ window.onload = function () {
       ///////////////////////////////////////////////////////////
     }
   }
+
+
 
   setup();
 };
