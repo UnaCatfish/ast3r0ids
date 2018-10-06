@@ -62,7 +62,7 @@ Ship.prototype.draw = function (context) {
       context.lineTo(thrust[i][0], thrust[i][1]);
     }
   }
-
+  context.strokeStyle = shipHit ? "#f00" : "#eee";
   context.stroke();
   context.restore()
 

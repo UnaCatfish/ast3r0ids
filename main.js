@@ -7,7 +7,7 @@ window.onload = function () {
   const context = canvas.getContext('2d');
   const width = canvas.width = window.innerWidth;
   const height = canvas.height = window.innerHeight;
-  const ship = new Ship(width / 2, height / 2);
+  let ship = new Ship(width / 2, height / 2);
   const asteroids = [];
   const lasers = [];
   const explosions = [];
@@ -24,11 +24,6 @@ window.onload = function () {
 
     makeRocks();
     inputInit(lasers, ship)
-
-    ///////////////////// DEBUG ////////////////////////
-
-
-    ////////////////////////////////////////////////////
 
     update();
   }
@@ -73,15 +68,26 @@ window.onload = function () {
       }
     }
 
-    ship.update();
-    ship.draw(context);
-    ship.edges();
 
-    shipHit = 0;
-    if (asteroids.length) {
-      for (let i = 0; i < asteroids.length; i++) {
-        if (shipToAsteroid(ship, asteroids[i])) {
-          shipHit++;
+    // draw, update and check ship
+    if (ship) {
+      ship.update();
+      ship.draw(context);
+      ship.edges();
+
+      shipHit = 0;
+      if (asteroids.length) {
+        for (let i = 0; i < asteroids.length; i++) {
+          let check = shipToAsteroid(ship, asteroids[i]);
+          if (check) {
+            const loc = ship.getLocation();
+            explosions.push(new Explosion([check.x, check.y]));
+            // shipHit++;
+            ship = null;
+            console.log('loser');
+
+            break;
+          }
         }
       }
     }
@@ -104,8 +110,6 @@ window.onload = function () {
 
     }
 
-
-
     /////////////////////// End Loop /////////////////////// 
     requestAnimationFrame(update);
   }
@@ -121,8 +125,5 @@ window.onload = function () {
       ///////////////////////////////////////////////////////////
     }
   }
-
-
-
   setup();
 };
