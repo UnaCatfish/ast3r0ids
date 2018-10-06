@@ -12,5 +12,5 @@ We have rocks, we have lasers and we have a triangle.
 
 ## Screenshot
 
-![ast3roids](https://user-images.githubusercontent.com/43213614/46575224-50612580-c9a9-11e8-9fc9-f71f4a5b9873.png)
+[![ast3roids](https://user-images.githubusercontent.com/43213614/46575224-50612580-c9a9-11e8-9fc9-f71f4a5b9873.png)](https://www.youtube.com/watch?v=q7PHuV0e9_w)
 
