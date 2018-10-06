@@ -10,7 +10,15 @@ function Asteroid(x, y, size) {
   this.y = y || Math.floor(Math.random() * canvas.height);
   this.size = size >= 0 ? size : defaultsize;
   this.particle = particle.create(this.x, this.y, 0, 0, 0);
+
+
+  ///////////////////////////////////
   this.particle.velocity.setLength(speed + (defaultsize - this.size) * 0.3);
+  // this.particle.velocity.setLength(0);
+  ////////////////////////////////////
+
+
+
   this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
   this.index = Math.floor(Math.random() * data.rock.length);
 }

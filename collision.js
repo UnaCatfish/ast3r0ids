@@ -1,43 +1,81 @@
-function lasertoAsteroid(laser, asteroid) {
+var mx, my;
+document.addEventListener('mousemove', onMouseUpdate, false);
+document.addEventListener('mouseenter', onMouseUpdate, false);
 
-  var isInside = false;
+function onMouseUpdate(e) {
+  mx = e.pageX;
+  my = e.pageY;
+  // console.log(mx, my);
+}
 
-  const box = data.rock[asteroid.index].box[asteroid.size]
+function getMouseX() {
+  return mx;
+}
+
+function getMouseY() {
+  return my;
+}
+
+
+
+function shipToAsteroid(ship, asteroid) {
+  const abox = data.rock[asteroid.index].box[asteroid.size];
+  const sbox = data.ship[0].box[0];
   const ax = asteroid.getX();
   const ay = asteroid.getY();
-  const px = laser.getX();
-  const py = laser.getY();
-  // const px = mx;
-  // const py = my;
-
-  // console.log('#####');
-  // console.log('mx:' + mx);
-  // console.log('my:' + my);
-  // console.log('ax:' + ax);
-  // console.log('ay:' + ay);
-  // console.log('maxY:' + box.maxY);
-  // console.log('my- ay:' + (my - ay));
+  const sx = ship.getX();
+  const sy = ship.getY();
 
   if (
-    px - ax < box.minX || px - ax > box.maxX ||
-    py - ay < box.minY || py - ay > box.maxY) {
+    ax + abox.maxX < sx + sbox.minX ||
+    ax + abox.minX > sx - sbox.minX ||
+    ay + abox.maxY < sy + sbox.minX ||
+    ay + abox.minY > sy - sbox.minX
+  ) {
+    return false;
+  }
+  return true;
+
+}
+
+
+
+
+
+
+function lasertoAsteroid(laser, asteroid) {
+  const box = data.rock[asteroid.index].box[asteroid.size]
+  const pn = { x: laser.getX(), y: laser.getY() };
+  const po = { x: asteroid.getX(), y: asteroid.getY() };
+
+  if (
+    pn.x - po.x < box.minX || pn.x - po.x > box.maxX ||
+    pn.y - po.y < box.minY || pn.y - po.y > box.maxY) {
     // console.log('fail');
     return false;
   }
   const polygon = data.rock[asteroid.index].collision[asteroid.size];
+  return pnPoly(pn, polygon, po);
+}
 
+// Point inside polygon
+// pn point location
+// polygon array of lines
+// po polygon origin
+function pnPoly(pn, polygon, po) {
+  let isInside = false;
   // Check if point is inside the polygon
   var i = 0, j = polygon.length - 1;
   for (i, j; i < polygon.length; j = i++) {
 
-    const ix = polygon[i][0] + ax;
-    const iy = polygon[i][1] + ay;
-    const jx = polygon[j][0] + ax;
-    const jy = polygon[j][1] + ay;
+    const ix = polygon[i][0] + po.x;
+    const iy = polygon[i][1] + po.y;
+    const jx = polygon[j][0] + po.x;
+    const jy = polygon[j][1] + po.y;
 
     // the magic algorythm 
-    if ((iy > py) != (jy > py) &&
-      px < (jx - ix) * (py - iy) / (jy - iy) + ix) {
+    if ((iy > pn.y) != (jy > pn.y) &&
+      pn.x < (jx - ix) * (pn.y - iy) / (jy - iy) + ix) {
       isInside = !isInside;
     }
   }
@@ -45,21 +83,4 @@ function lasertoAsteroid(laser, asteroid) {
 }
 
 
-// var mx, my;
 
-// document.addEventListener('mousemove', onMouseUpdate, false);
-// document.addEventListener('mouseenter', onMouseUpdate, false);
-
-// function onMouseUpdate(e) {
-//   mx = e.pageX;
-//   my = e.pageY;
-//   // console.log(mx, my);
-// }
-
-// function getMouseX() {
-//   return mx;
-// }
-
-// function getMouseY() {
-//   return my;
-// }

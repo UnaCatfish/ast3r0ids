@@ -1,4 +1,5 @@
 const friction = 0.994;
+let shipHit;
 
 function Ship(x, y) {
   this.particle = particle.create(x, y, 0, 0, 0);
@@ -46,7 +47,8 @@ Ship.prototype.draw = function (context) {
   context.save();
   context.translate(this.particle.position.getX(), this.particle.position.getY());
   context.rotate(this.angle);
-  // context.fillStyle = "#000"; 
+
+  context.fillStyle = shipHit ? "#f00" : "#000";
   context.beginPath();
   context.moveTo(10, 0);
   context.lineTo(-10, -7);
@@ -58,10 +60,10 @@ Ship.prototype.draw = function (context) {
     context.lineTo(-17, 0);
     context.lineTo(-10, 3);
   }
-  // context.fill();
+  context.fill();
   context.stroke();
-
   context.restore()
+
 }
 
 Ship.prototype.getHeading = function () {
@@ -74,4 +76,12 @@ Ship.prototype.getLocation = function () {
 
 Ship.prototype.getLaser = function () {
   return 10;
+}
+
+Ship.prototype.getX = function () {
+  return this.particle.position.getX();
+}
+
+Ship.prototype.getY = function () {
+  return this.particle.position.getY();
 }

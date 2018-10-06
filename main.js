@@ -1,5 +1,7 @@
 'use strict'
 
+
+
 window.onload = function () {
   const canvas = document.getElementById('canvas');
   const context = canvas.getContext('2d');
@@ -8,10 +10,12 @@ window.onload = function () {
   const ship = new Ship(width / 2, height / 2);
   const asteroids = [];
   const lasers = [];
-  const numRocks = 3;
+  const numRocks = 6;
   const bgColor = "#000";
   const lineColor = "#eee";
   const lineWidth = 1;
+
+
 
   function setup() {
     data.preload();
@@ -66,6 +70,15 @@ window.onload = function () {
     ship.draw(context);
     ship.edges();
 
+    shipHit = 0;
+    if (asteroids.length) {
+      for (let i = 0; i < asteroids.length; i++) {
+        if (shipToAsteroid(ship, asteroids[i])) {
+          shipHit++;
+        }
+      }
+    }
+
     if (!asteroids.length) {
       console.log('Winner, winner, chicken dinner');
       makeRocks();
@@ -78,7 +91,11 @@ window.onload = function () {
     for (let i = 0; i < numRocks; i++) {
       const ax = Math.floor(Math.random() * canvas.width);
       const ay = Math.floor(Math.random() * canvas.height);
+
+      ///////////////////////////////////////////////////////
       asteroids.push(new Asteroid(ax, ay));
+      // asteroids.push(new Asteroid(width / 2 + 50, height / 2));
+      ///////////////////////////////////////////////////////////
     }
   }
 
