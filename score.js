@@ -35,22 +35,15 @@ Score.prototype.removeShip = function () {
   }
 }
 
-
 Score.prototype.draw = function (context) {
-
   let sc = this.score
-  // let sc = 1
   let loop = sc.toString().length || 1;
-  let x = 140;
-  let y = 14;
-
+  let nx = 140;
+  let ny = 14;
   for (i = loop - 1; i >= 0; i--) {
-
     const digit = digits[sc % 10];
-    // console.log(digit, sc);
-
     context.save();
-    context.translate(x, y);
+    context.translate(nx, ny);
     for (let seg of digit) {
       context.beginPath();
       context.moveTo(segments[seg][0], segments[seg][1]);
@@ -58,10 +51,27 @@ Score.prototype.draw = function (context) {
       context.stroke();
     }
     context.restore()
-    x -= 18;
+    nx -= 18;
     sc = Math.floor(sc / 10);
-
   }
+
+  let sx = 140;
+  let sy = 40;
+  const poly = shipData[0];
+  for (let i = 0; i < this.ships; i++) {
+    context.save();
+    context.translate(sx, sy);
+    context.rotate(Math.PI / 2 * 3);
+    context.beginPath();
+    context.moveTo(poly[0][0], poly[0][1]);
+    for (let i = 1; i < poly.length; i++) {
+      context.lineTo(poly[i][0], poly[i][1]);
+    }
+    context.stroke();
+    sx -= 20;
+    context.restore()
+  }
+
 
 
 
