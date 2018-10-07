@@ -10,7 +10,7 @@ const ships = 3;
 function Score() {
   this.score = 0;
   this.ships = ships;
-  this.draw();
+  console.log(`ships: ${this.ships}  score: ${this.score}`);
 }
 
 Score.prototype.update = function (enemy, size) {
@@ -20,13 +20,14 @@ Score.prototype.update = function (enemy, size) {
   if (this.score % 10000 == 0) {
     this.ships += 1;
   }
+  console.log(`ships: ${this.ships}  score: ${this.score}`);
 }
 
 Score.prototype.removeShip = function () {
 
   if (this.ships > 1) {
     this.ships -= 1;
-    this.draw();
+    console.log(`ships: ${this.ships}  score: ${this.score}`);
   } else {
     this.ships = 0;
     gameOver = true;
@@ -35,17 +36,34 @@ Score.prototype.removeShip = function () {
 }
 
 
-Score.prototype.draw = function () {
+Score.prototype.draw = function (context) {
 
-  console.log(`ships: ${this.ships}  score: ${this.score}`);
-  // context.save();
-  // context.translate(this.particle.position.getX(), this.particle.position.getY());
-  // context.beginPath();
-  // context.strokeStyle = '#eee';
-  // context.moveTo(poly[0][0], poly[0][1]);
-  // for (let i = 1; i < poly.length; i++) {
-  //   context.lineTo(poly[i][0], poly[i][1]);
-  // }
-  // context.stroke();
-  // context.restore()
+  let sc = this.score
+  // let sc = 1
+  let loop = sc.toString().length || 1;
+  let x = 140;
+  let y = 14;
+
+  for (i = loop - 1; i >= 0; i--) {
+
+    const digit = digits[sc % 10];
+    // console.log(digit, sc);
+
+    context.save();
+    context.translate(x, y);
+    for (let seg of digit) {
+      context.beginPath();
+      context.moveTo(segments[seg][0], segments[seg][1]);
+      context.lineTo(segments[seg][2], segments[seg][3]);
+      context.stroke();
+    }
+    context.restore()
+    x -= 18;
+    sc = Math.floor(sc / 10);
+
+  }
+
+
+
+
 }

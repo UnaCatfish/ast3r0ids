@@ -15,7 +15,7 @@ window.onload = function () {
   const explosions = [];
   const numRocks = 6;
   const bgColor = "#000";
-  const lineColor = "#eee";
+  const lineColor = "#fff";
   const lineWidth = 1;
   const respawnTime = 2000;
 
@@ -40,6 +40,8 @@ window.onload = function () {
   function update() {
     context.fillRect(0, 0, width, height);
     ////////////////// ANIMATION Loop ////////////////////
+
+    score.draw(context);
 
     for (let asteroid of asteroids) {
       asteroid.draw(context);
@@ -85,7 +87,6 @@ window.onload = function () {
 
               // Increase score
               score.update('rock', size)
-              score.draw();
             }
           }
         }
