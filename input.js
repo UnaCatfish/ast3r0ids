@@ -31,7 +31,11 @@ function inputInit(lasers, ship) {
         if (fire) return;
         fire = true;
         if (ship.alive) {
-          lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
+          if (lasers.length < 4) {
+            lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
+
+          }
+
         }
         break;
 

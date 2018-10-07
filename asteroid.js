@@ -2,8 +2,8 @@ const defaultsize = 2;
 const speed = 0.3;
 
 function Asteroid(x, y, size) {
-  this.x = x || Math.floor(Math.random() * canvas.width);
-  this.y = y || Math.floor(Math.random() * canvas.height);
+  this.x = x;
+  this.y = y;
   this.size = size >= 0 ? size : defaultsize;
   this.particle = particle.create(this.x, this.y, 0, 0, 0);
 
