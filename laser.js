@@ -1,11 +1,11 @@
 
 function Laser(location, angle, laser) {
   this.position = vector.create(location[0], location[1], 0, angle, 0);
-  this.gun = vector.create(10, 0);
+  this.gun = vector.create(8, 0);
   this.gun.setAngle(angle);
   this.position.addTo(this.gun);
   this.velocity = vector.create(0, 0)
-  this.velocity.setLength(10);
+  this.velocity.setLength(8);
   this.velocity.setAngle(angle);
   this.isAlive = true;
 }
@@ -14,6 +14,8 @@ Laser.prototype.draw = function (context) {
   context.save();
   context.translate(this.position.getX(), this.position.getY());
   context.beginPath();
+  context.fillStyle = "#fff"
+  // context.fillRect(0, 0, 2, 2);
   context.arc(0, 0, 1, 0, Math.PI * 2, false);
   context.stroke();
   context.restore()

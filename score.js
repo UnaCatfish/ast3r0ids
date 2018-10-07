@@ -42,7 +42,7 @@ Score.prototype.removeShip = function () {
 Score.prototype.draw = function (context) {
   let sc = this.score
   let loop = sc.toString().length || 1;
-  let nx = 140;
+  let nx = 200;
   let ny = 14;
   for (i = loop - 1; i >= 0; i--) {
     const digit = digits[sc % 10];
@@ -59,7 +59,7 @@ Score.prototype.draw = function (context) {
     sc = Math.floor(sc / 10);
   }
 
-  let sx = 140;
+  let sx = 200;
   let sy = 40;
   const poly = shipData[0];
   for (let i = 0; i < this.ships; i++) {

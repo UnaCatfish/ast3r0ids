@@ -25,14 +25,14 @@ Ship.prototype.reset = function () {
 Ship.prototype.update = function () {
 
   if (turningLeft) {
-    this.angle -= 0.06;
+    this.angle -= 0.08;
   }
   if (turningRight) {
-    this.angle += 0.06;
+    this.angle += 0.08;
   }
   this.thrust.setAngle(this.angle);
 
-  if (thrusting && this.particle.velocity.getLength() < 8) {
+  if (thrusting && this.particle.velocity.getLength() < 6) {
     // if (thrusting) {
     this.thrust.setLength(0.06);
     // console.log();
