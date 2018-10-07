@@ -48,6 +48,16 @@ window.onload = function () {
     }
 
     if (!gameOver) {
+
+      if (ship.alive && fire) {
+        {
+          if (lasers.length < 4) {
+            lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
+            fire = false;
+          }
+        }
+      }
+
       for (let i = lasers.length - 1; i >= 0; i--) {
         lasers[i].draw(context);
         lasers[i].update();
@@ -105,28 +115,24 @@ window.onload = function () {
         }
       }
 
-
-
       if (!asteroids.length) {
         console.log('Winner, winner, chicken dinner');
         makeRocks();
       }
-
-      if (explosions.length) {
-        explosions.forEach((explosion, index) => {
-          explosion.draw(context);
-          explosion.update();
-          if (explosion.lifespan) {
-            explosion.lifespan--
-          } else {
-            explosions.splice(index, 1);
-          }
-        });
-
-      }
-
     }
 
+    if (explosions.length) {
+      explosions.forEach((explosion, index) => {
+        explosion.draw(context);
+        explosion.update();
+        if (explosion.lifespan) {
+          explosion.lifespan--
+        } else {
+          explosions.splice(index, 1);
+        }
+      });
+
+    }
     /////////////////////// End Loop /////////////////////// 
     requestAnimationFrame(update);
   }

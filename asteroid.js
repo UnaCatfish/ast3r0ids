@@ -1,5 +1,5 @@
 const defaultsize = 2;
-const speed = 0.3;
+const speed = 0.4;
 
 function Asteroid(x, y, size) {
   this.x = x;
@@ -9,7 +9,7 @@ function Asteroid(x, y, size) {
 
 
   ///////////////////////////////////
-  this.particle.velocity.setLength(speed + (defaultsize - this.size) * 0.3);
+  this.particle.velocity.setLength(speed + (defaultsize - this.size) * 0.4);
   // this.particle.velocity.setLength(0);
   ////////////////////////////////////
 

@@ -6,7 +6,7 @@ function Explosion(origin, size) {
   this.isAlive = true;
   this.numFragments = 12;
   this.fragments = [];
-  this.lifespan = 30;
+  this.lifespan = 24;
 
   for (let i = 0; i < this.numFragments; i++) {
     this.fragments.push(particle.create(
@@ -30,7 +30,7 @@ Explosion.prototype.draw = function (context) {
   for (const frag of this.fragments) {
     context.beginPath();
 
-    context.arc(frag.position.getX(), frag.position.getY(), 0.5, 0, Math.PI * 2, false);
+    context.arc(frag.position.getX(), frag.position.getY(), 0.6, 0, Math.PI * 2, false);
     // context.arc(0, 0, 1, 0, Math.PI * 2, false);
     context.stroke();
   }

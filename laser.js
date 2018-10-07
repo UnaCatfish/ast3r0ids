@@ -5,7 +5,7 @@ function Laser(location, angle, laser) {
   this.gun.setAngle(angle);
   this.position.addTo(this.gun);
   this.velocity = vector.create(0, 0)
-  this.velocity.setLength(6);
+  this.velocity.setLength(10);
   this.velocity.setAngle(angle);
   this.isAlive = true;
 }
@@ -20,13 +20,6 @@ Laser.prototype.draw = function (context) {
 }
 
 Laser.prototype.update = function () {
-  // if (ship.alive) {
-  //   if (lasers.length < 4) {
-  //     lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
-
-  //   }
-
-  // }
   this.position.addTo(this.velocity);
 }
 

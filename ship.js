@@ -1,4 +1,4 @@
-const friction = 0.994;
+const friction = 0.996;
 let shipHit;
 
 function Ship(x, y) {
@@ -7,6 +7,8 @@ function Ship(x, y) {
   this.thrust = vector.create(0, 0);
   this.angle = 0;
   this.alive = true;
+  console.log(this.particle);
+
 }
 
 Ship.prototype.reset = function () {
@@ -30,13 +32,17 @@ Ship.prototype.update = function () {
   }
   this.thrust.setAngle(this.angle);
 
-  if (thrusting) {
+  if (thrusting && this.particle.velocity.getLength() < 8) {
+    // if (thrusting) {
     this.thrust.setLength(0.06);
+    // console.log();
   } else {
     this.thrust.setLength(0);
   }
 
+
   this.particle.accelerate(this.thrust);
+
   this.particle.update();
 }
 
