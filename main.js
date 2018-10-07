@@ -120,6 +120,13 @@ window.onload = function () {
         console.log('Winner, winner, chicken dinner');
         makeRocks();
       }
+    } else {
+      context.save()
+      context.font = "30px sans-serif ";
+      context.fillStyle = "#fff";
+      context.textAlign = "center";
+      context.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
+      context.restore();
     }
 
     if (explosions.length) {

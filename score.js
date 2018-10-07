@@ -6,19 +6,23 @@
 
 const rock = [100, 50, 20];
 const ships = 3;
+let newShip = 10000;
 
 function Score() {
   this.score = 0;
   this.ships = ships;
+  this.newShip = newShip;
   console.log(`ships: ${this.ships}  score: ${this.score}`);
 }
 
 Score.prototype.update = function (enemy, size) {
   if (enemy == 'rock') {
     this.score += rock[size];
+    this.newShip -= rock[size]
   }
-  if (this.score % 10000 == 0) {
+  if (this.newShip <= 0) {
     this.ships += 1;
+    this.newShip += newShip;
   }
   console.log(`ships: ${this.ships}  score: ${this.score}`);
 }
@@ -70,6 +74,11 @@ Score.prototype.draw = function (context) {
     context.stroke();
     sx -= 20;
     context.restore()
+
+
+
+
+
   }
 
 
