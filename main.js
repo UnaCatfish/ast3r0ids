@@ -14,11 +14,12 @@ window.onload = function () {
   const ufos = [];
   const lasers = [];
   const explosions = [];
-  const numRocks = 1;
+  const numRocks = 6;
   const bgColor = "#000";
   const lineColor = "#fff";
   const lineWidth = 1;
   const respawnTime = 2000;
+  const ufoSpawnTime = 15000;
 
   function setup() {
     data.preload();
@@ -28,7 +29,7 @@ window.onload = function () {
 
     makeRocks();
     inputInit(lasers, ship)
-    setTimeout(spawnUfo, respawnTime)
+    setTimeout(spawnUfo, ufoSpawnTime)
     update();
   }
 
@@ -68,8 +69,9 @@ window.onload = function () {
       ufos[0].edges();
       const ufoLaser = ufos[0].getLaser();
       if (ufoLaser != null) {
-
-        console.log('ufo fires');
+        const angle = Math.random() * Math.PI * 2;
+        lasers.push(new Laser(ufos[0].getLocation(), angle,
+          ufos[0].getLaserLoc(), false));
       }
     }
 
@@ -79,7 +81,8 @@ window.onload = function () {
       if (ship.alive && fire) {
         {
           if (lasers.length < 4) {
-            lasers.push(new Laser(ship.getLocation(), ship.getHeading()));
+            lasers.push(new Laser(ship.getLocation(),
+              ship.getHeading(), ship.getLaserLoc(), true));
             fire = false;
           }
         }
@@ -101,6 +104,12 @@ window.onload = function () {
               const loc = asteroids[j].getLocation();
               const size = asteroids[j].getSize();
               asteroids.splice(j, 1);
+
+              if (lasers[i].points) {
+                // Increase score
+                score.update('rock', size)
+              }
+
               lasers.splice(i, 1);
               explosions.push(new Explosion(loc, size));
 
@@ -109,8 +118,7 @@ window.onload = function () {
                 asteroids.push(new Asteroid(loc[0], loc[1], size - 1));
               }
 
-              // Increase score
-              score.update('rock', size)
+
             }
           }
 
@@ -121,10 +129,7 @@ window.onload = function () {
             ufos.splice(0, 1);
             lasers.splice(i, 1);
             explosions.push(new Explosion(loc, 0));
-            // const st = Math.random() * 15000 + 15000;
-            const st = 2000;
-
-
+            const st = Math.random() * ufoSpawnTime + ufoSpawnTime;
             console.log(Math.round(st / 1000));
             setTimeout(spawnUfo, st);
           }

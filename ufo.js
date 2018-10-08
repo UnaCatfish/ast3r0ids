@@ -12,6 +12,11 @@ function Ufo(x, y) {
   this.alive = true;
   this.change = Math.random() * 75 + 50;
   this.fireRate = fireRate;
+  this.laserLoc = 25;
+}
+
+Ufo.prototype.getLaserLoc = function () {
+  return this.laserLoc
 }
 
 Ufo.prototype.update = function () {

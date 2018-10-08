@@ -8,6 +8,11 @@ function Ship(x, y) {
   this.friction = friction;
   this.angle = 0;
   this.alive = true;
+  this.laserLoc = 8;
+}
+
+Ship.prototype.getLaserLoc = function () {
+  return this.laserLoc
 }
 
 Ship.prototype.reset = function () {

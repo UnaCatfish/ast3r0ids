@@ -1,13 +1,18 @@
 
-function Laser(location, angle, laser) {
-  this.position = vector.create(location[0], location[1], 0, angle, 0);
-  this.gun = vector.create(8, 0);
-  this.gun.setAngle(angle);
-  this.position.addTo(this.gun);
+function Laser(location, angle, laserLoc, points) {
+  this.position = vector.create(location[0], location[1]);
+  // Starting position from craft
+  this.laserLoc = vector.create(laserLoc, 0);
+  this.laserLoc.setAngle(angle);
+  this.position.addTo(this.laserLoc);
+  // laser direction and speed
   this.velocity = vector.create(0, 0)
   this.velocity.setLength(8);
   this.velocity.setAngle(angle);
+  // laser info
   this.isAlive = true;
+  // points for destroying stuff t/f
+  this.points = points
 }
 
 Laser.prototype.draw = function (context) {
