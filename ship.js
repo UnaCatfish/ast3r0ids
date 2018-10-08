@@ -2,9 +2,10 @@ const friction = 0.996;
 let shipHit;
 
 function Ship(x, y) {
-  this.particle = particle.create(x, y, 0, 0, 0);
-  this.particle.friction = friction;
+  this.position = vector.create(x, y);
+  this.velocity = vector.create(0, 0);
   this.thrust = vector.create(0, 0);
+  this.friction = friction;
   this.angle = 0;
   this.alive = true;
 }
@@ -12,7 +13,7 @@ function Ship(x, y) {
 Ship.prototype.reset = function () {
   this.setLocation(canvas.width / 2, canvas.height / 2)
   this.thrust.multiplyBy(0)
-  this.particle.velocity.multiplyBy(0);
+  this.velocity.multiplyBy(0);
   this.angle = 0;
   this.alive = true;
   turningLeft = false;
@@ -30,7 +31,7 @@ Ship.prototype.update = function () {
   }
   this.thrust.setAngle(this.angle);
 
-  if (thrusting && this.particle.velocity.getLength() < 6) {
+  if (thrusting && this.velocity.getLength() < 6) {
     // if (thrusting) {
     this.thrust.setLength(0.06);
     // console.log();
@@ -38,24 +39,24 @@ Ship.prototype.update = function () {
     this.thrust.setLength(0);
   }
 
+  this.velocity.addTo(this.thrust)
 
-  this.particle.accelerate(this.thrust);
-
-  this.particle.update();
+  this.velocity.multiplyBy(this.friction);
+  this.position.addTo(this.velocity);
 }
 
 Ship.prototype.edges = function () {
-  if (this.particle.position.getX() > canvas.width) {
-    this.particle.position.setX(0);
+  if (this.position.getX() > canvas.width) {
+    this.position.setX(0);
   }
-  if (this.particle.position.getX() < 0) {
-    this.particle.position.setX(canvas.width);
+  if (this.position.getX() < 0) {
+    this.position.setX(canvas.width);
   }
-  if (this.particle.position.getY() > canvas.height) {
-    this.particle.position.setY(0);
+  if (this.position.getY() > canvas.height) {
+    this.position.setY(0);
   }
-  if (this.particle.position.getY() < 0) {
-    this.particle.position.setY(canvas.height);
+  if (this.position.getY() < 0) {
+    this.position.setY(canvas.height);
   }
 }
 
@@ -64,7 +65,7 @@ Ship.prototype.draw = function (context) {
   const thrust = this.getThrust();
 
   context.save();
-  context.translate(this.particle.position.getX(), this.particle.position.getY());
+  context.translate(this.position.getX(), this.position.getY());
   context.rotate(this.angle);
   context.beginPath();
   context.moveTo(poly[0][0], poly[0][1]);
@@ -84,7 +85,7 @@ Ship.prototype.draw = function (context) {
   if (debug) {
     const poly = this.getBox();
     context.save();
-    context.translate(this.particle.position.getX(), this.particle.position.getY());
+    context.translate(this.position.getX(), this.position.getY());
     context.rotate(this.angle);
     context.beginPath();
     context.moveTo(poly.minX, poly.minY);
@@ -105,11 +106,11 @@ Ship.prototype.getHeading = function () {
 
 
 Ship.prototype.getLocation = function () {
-  return [this.particle.position.getX(), this.particle.position.getY()];
+  return [this.position.getX(), this.position.getY()];
 }
 
 Ship.prototype.setLocation = function (x, y) {
-  this.particle.position.setX(x), this.particle.position.setY(y);
+  this.position.setX(x), this.position.setY(y);
 }
 
 Ship.prototype.getLaser = function () {
@@ -117,11 +118,11 @@ Ship.prototype.getLaser = function () {
 }
 
 Ship.prototype.getX = function () {
-  return this.particle.position.getX();
+  return this.position.getX();
 }
 
 Ship.prototype.getY = function () {
-  return this.particle.position.getY();
+  return this.position.getY();
 }
 
 Ship.prototype.getPoly = function () {

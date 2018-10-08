@@ -1,11 +1,8 @@
 
-function Laser(location, angle, ufo) {
+function Laser(location, angle, laser) {
   this.position = vector.create(location[0], location[1], 0, angle, 0);
-
   this.gun = vector.create(8, 0);
   this.gun.setAngle(angle);
-
-
   this.position.addTo(this.gun);
   this.velocity = vector.create(0, 0)
   this.velocity.setLength(8);

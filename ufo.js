@@ -5,9 +5,10 @@ const fireRate = 50;
 function Ufo(x, y) {
   this.x = x;
   this.y = y;
-  this.particle = particle.create(this.x, this.y, 0, 0, 0);
-  this.particle.velocity.setLength(1);
-  this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
+  this.position = vector.create(x, y);
+  this.velocity = vector.create(0, 0)
+  this.velocity.setLength(1);
+  this.velocity.setAngle(Math.random() * Math.PI * 2);
   this.alive = true;
   this.change = Math.random() * 75 + 50;
   this.fireRate = fireRate;
@@ -15,11 +16,11 @@ function Ufo(x, y) {
 
 Ufo.prototype.update = function () {
   if (this.change > 0) {
-    this.particle.update();
+    this.position.addTo(this.velocity);
     this.change -= 1
   } else {
     this.change = Math.random() * 75 + 50;
-    this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
+    this.velocity.setAngle(Math.random() * Math.PI * 2);
   }
 }
 
@@ -39,17 +40,17 @@ Ufo.prototype.getLaser = function (direction) {
 
 
 Ufo.prototype.edges = function () {
-  if (this.particle.position.getX() > canvas.width) {
-    this.particle.position.setX(0);
+  if (this.position.getX() > canvas.width) {
+    this.position.setX(0);
   }
-  if (this.particle.position.getX() < 0) {
-    this.particle.position.setX(canvas.width);
+  if (this.position.getX() < 0) {
+    this.position.setX(canvas.width);
   }
-  if (this.particle.position.getY() > canvas.height) {
-    this.particle.position.setY(0);
+  if (this.position.getY() > canvas.height) {
+    this.position.setY(0);
   }
-  if (this.particle.position.getY() < 0) {
-    this.particle.position.setY(canvas.height);
+  if (this.position.getY() < 0) {
+    this.position.setY(canvas.height);
   }
 }
 
@@ -57,7 +58,7 @@ Ufo.prototype.draw = function (context) {
   const poly = this.getPoly();
   const details = this.getDetails();
   context.save();
-  context.translate(this.particle.position.getX(), this.particle.position.getY());
+  context.translate(this.position.getX(), this.position.getY());
   context.beginPath();
   context.moveTo(poly[0][0], poly[0][1]);
   for (let i = 1; i < poly.length; i++) {
@@ -74,7 +75,7 @@ Ufo.prototype.draw = function (context) {
   if (debug) {
     const poly = this.getBox();
     context.save();
-    context.translate(this.particle.position.getX(), this.particle.position.getY());
+    context.translate(this.position.getX(), this.position.getY());
     context.rotate(this.angle);
     context.beginPath();
     context.moveTo(poly.minX, poly.minY);
@@ -96,20 +97,20 @@ Ufo.prototype.getHeading = function () {
 
 
 Ufo.prototype.getLocation = function () {
-  return [this.particle.position.getX(), this.particle.position.getY()];
+  return [this.position.getX(), this.position.getY()];
 }
 
 Ufo.prototype.setLocation = function (x, y) {
-  this.particle.position.setX(x), this.particle.position.setY(y);
+  this.position.setX(x), this.position.setY(y);
 }
 
 // Return ufo location
 Ufo.prototype.getX = function () {
-  return this.particle.position.getX();
+  return this.position.getX();
 }
 
 Ufo.prototype.getY = function () {
-  return this.particle.position.getY();
+  return this.position.getY();
 }
 
 
