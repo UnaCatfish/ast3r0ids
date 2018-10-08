@@ -1,14 +1,42 @@
 // const friction = 0.996;
 // let UfoHit;
+const fireRate = 50;
 
 function Ufo(x, y) {
-  this.particle = particle.create(x, y, 0, 0, 0);
+  this.x = x;
+  this.y = y;
+  this.particle = particle.create(this.x, this.y, 0, 0, 0);
+  this.particle.velocity.setLength(1);
+  this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
   this.alive = true;
+  this.change = Math.random() * 75 + 50;
+  this.fireRate = fireRate;
 }
 
 Ufo.prototype.update = function () {
-  this.particle.update();
+  if (this.change > 0) {
+    this.particle.update();
+    this.change -= 1
+  } else {
+    this.change = Math.random() * 75 + 50;
+    this.particle.velocity.setAngle(Math.random() * Math.PI * 2);
+  }
 }
+
+Ufo.prototype.getLaser = function (direction) {
+
+  if (this.fireRate > 0) {
+    this.fireRate -= 1;
+    return null;
+  }
+
+  this.fireRate = fireRate;
+  const dir = Math.random() * Math.PI * 2;
+
+  return this.getLocation();
+
+}
+
 
 Ufo.prototype.edges = function () {
   if (this.particle.position.getX() > canvas.width) {
@@ -74,12 +102,6 @@ Ufo.prototype.getLocation = function () {
 Ufo.prototype.setLocation = function (x, y) {
   this.particle.position.setX(x), this.particle.position.setY(y);
 }
-
-// ?????
-Ufo.prototype.getLaser = function () {
-  return 10;
-}
-
 
 // Return ufo location
 Ufo.prototype.getX = function () {

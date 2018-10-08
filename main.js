@@ -14,7 +14,7 @@ window.onload = function () {
   const ufos = [];
   const lasers = [];
   const explosions = [];
-  const numRocks = 6;
+  const numRocks = 1;
   const bgColor = "#000";
   const lineColor = "#fff";
   const lineWidth = 1;
@@ -67,11 +67,17 @@ window.onload = function () {
 
     if (ufos.length > 0) {
       ufos[0].draw(context);
+      ufos[0].update();
+      ufos[0].edges();
+      const ufoLaser = ufos[0].getLaser();
+      if (ufoLaser != null) {
+
+        console.log('ufo fires');
+      }
     }
 
 
     if (!gameOver) {
-
 
       if (ship.alive && fire) {
         {
@@ -118,7 +124,10 @@ window.onload = function () {
             ufos.splice(0, 1);
             lasers.splice(i, 1);
             explosions.push(new Explosion(loc, 0));
-            const st = Math.random() * 15000 + 15000;
+            // const st = Math.random() * 15000 + 15000;
+            const st = 2000;
+
+
             console.log(Math.round(st / 1000));
             setTimeout(spawnUfo, st);
           }
