@@ -86,7 +86,7 @@ function laserToUfo(laser, ufo) {
     // console.log('fail');
     return false;
   }
-  // const polygon = asteroid.getCollision();
+  // const polygon = asteroid.getPolyC();
   // return pnPoly(pn, polygon, po);
   return true;
 }
@@ -102,7 +102,7 @@ function lasertoAsteroid(laser, asteroid) {
     // console.log('fail');
     return false;
   }
-  const polygon = asteroid.getCollision();
+  const polygon = asteroid.getPolyC();
   return pnPoly(pn, polygon, po);
 }
 

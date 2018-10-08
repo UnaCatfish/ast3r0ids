@@ -28,10 +28,7 @@ window.onload = function () {
 
     makeRocks();
     inputInit(lasers, ship)
-
-    setTimeout(spawnUfo, 3000)
-
-
+    setTimeout(spawnUfo, respawnTime)
     update();
   }
 
@@ -153,7 +150,6 @@ window.onload = function () {
               ship.alive = false;
               score.removeShip();
               setTimeout(respawn, respawnTime)
-              fire = false;
               break;
             }
           }

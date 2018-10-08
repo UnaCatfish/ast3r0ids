@@ -14,7 +14,7 @@ function Asteroid(x, y, size) {
 
 Asteroid.prototype.draw = function (context) {
   const poly = this.getPoly();
-  const coll = this.getCollision();
+  const coll = this.getPolyC();
   const box = this.getBox();
 
   context.save();
@@ -99,6 +99,6 @@ Asteroid.prototype.getBox = function () {
   return data.rock[this.rockType].box[this.size]
 }
 
-Asteroid.prototype.getCollision = function () {
+Asteroid.prototype.getPolyC = function () {
   return data.rock[this.rockType].collision[this.size];
 }

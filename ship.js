@@ -19,6 +19,7 @@ Ship.prototype.reset = function () {
   turningLeft = false;
   turningRight = false;
   thrusting = false;
+  fire = false;
 }
 
 Ship.prototype.update = function () {
@@ -113,10 +114,6 @@ Ship.prototype.setLocation = function (x, y) {
   this.position.setX(x), this.position.setY(y);
 }
 
-Ship.prototype.getLaser = function () {
-  return 10;
-}
-
 Ship.prototype.getX = function () {
   return this.position.getX();
 }
@@ -137,6 +134,6 @@ Ship.prototype.getBox = function () {
   return data.ship[0].box[0];
 }
 
-Ship.prototype.getCollision = function () {
+Ship.prototype.getPollyC = function () {
   return data.ship[0].collision[0];
 }
