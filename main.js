@@ -122,7 +122,7 @@ window.onload = function () {
             }
           }
 
-          if (lasers[i] && ufos[0] && laserToUfo(lasers[i], ufos[0])) {
+          if (lasers[i] && ufos[0] && laserToCraft(lasers[i], ufos[0])) {
             const loc = ufos[0].getLocation();
             // const size = ufos[0].getSize();
             score.update('ufo', 1)
@@ -132,6 +132,18 @@ window.onload = function () {
             const st = Math.random() * ufoSpawnTime + ufoSpawnTime;
             console.log(Math.round(st / 1000));
             setTimeout(spawnUfo, st);
+          }
+
+          if (lasers[i] && laserToCraft(lasers[i], ship)) {
+            const loc = ship.getLocation();
+            // const size = ufos[0].getSize();
+            lasers.splice(i, 1);
+            explosions.push(new Explosion(loc, 0));
+            // new ship?
+
+            ship.alive = false;
+            score.removeShip();
+            setTimeout(respawn, respawnTime)
           }
 
         }

@@ -75,10 +75,10 @@ function segmentIntersect(p0, p1, p2, p3) {
   }
 }
 
-function laserToUfo(laser, ufo) {
-  const box = ufo.getBox();
+function laserToCraft(laser, craft) {
+  const box = craft.getBox();
   const pn = { x: laser.getX(), y: laser.getY() };
-  const po = { x: ufo.getX(), y: ufo.getY() };
+  const po = { x: craft.getX(), y: craft.getY() };
 
   if (
     pn.x - po.x < box.minX || pn.x - po.x > box.maxX ||
