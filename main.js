@@ -2,6 +2,7 @@
 const debug = false;
 const showCollide = false;
 let gameOver = false;
+let rockSpeed = 0.2;
 
 window.onload = function () {
   const canvas = document.getElementById('canvas');
@@ -14,7 +15,7 @@ window.onload = function () {
   const ufos = [];
   const lasers = [];
   const explosions = [];
-  const numRocks = 8;
+  const numRocks = 6;
   const bgColor = "#000";
   const lineColor = "#fff";
   const lineWidth = 1;
@@ -31,6 +32,10 @@ window.onload = function () {
     inputInit(lasers, ship)
     setTimeout(spawnUfo, ufoSpawnTime)
     update();
+    context.fillRect(0, 0, width, height);
+
+    const text = new Text('game over', 4);
+    text.draw(context);
   }
 
   ///////////// Timed ///////////////////
@@ -40,7 +45,6 @@ window.onload = function () {
       ufos.push(new Ufo(
         Math.floor(Math.random() * canvas.width),
         Math.floor(Math.random() * canvas.height)));
-
     }
   }
 
@@ -117,8 +121,6 @@ window.onload = function () {
                 asteroids.push(new Asteroid(loc[0], loc[1], size - 1));
                 asteroids.push(new Asteroid(loc[0], loc[1], size - 1));
               }
-
-
             }
           }
 
@@ -175,15 +177,17 @@ window.onload = function () {
 
       if (!asteroids.length) {
         console.log('Winner, winner, chicken dinner');
+        if (rockSpeed < 1) {
+          rockSpeed += .05;
+          console.log(rockSpeed);
+
+        }
         makeRocks();
       }
+
     } else {
-      context.save()
-      context.font = "30px sans-serif ";
-      context.fillStyle = "#fff";
-      context.textAlign = "center";
-      context.fillText("GAME OVER", canvas.width / 2, canvas.height / 2);
-      context.restore();
+      const text = new Text('game over', 4);
+      text.draw(context);
     }
 
     if (explosions.length) {

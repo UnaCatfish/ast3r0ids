@@ -1,5 +1,5 @@
 const defaultsize = 2;
-const speed = 0.4;
+// const speed = 0.4;
 
 function Asteroid(x, y, size) {
   this.x = x;
@@ -7,7 +7,7 @@ function Asteroid(x, y, size) {
   this.size = size >= 0 ? size : defaultsize;
   this.position = vector.create(x, y);
   this.velocity = vector.create(0, 0)
-  this.velocity.setLength(speed + (defaultsize - this.size) * 0.4);
+  this.velocity.setLength(rockSpeed + (defaultsize - this.size) * 0.4);
   this.velocity.setAngle(Math.random() * Math.PI * 2);
   this.rockType = Math.floor(Math.random() * data.rock.length);
 }
