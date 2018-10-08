@@ -11,6 +11,20 @@ const shipData = [
   [[-6, -3], [-13, 0], [-6, 3]]
 ];
 
+
+
+
+
+
+
+const ufoData = [[[-6, -4], [-3, -9], [3, -9], [6, -4], [16, 1], [6, 8], [-6, 8], [-16, 1], [-6, -4]],
+[[-6, -4], [6, -4]],
+[[-16, 1], [16, 1]]];
+
+// const ufoData = [[[-4, -2], [-2, -5], [2, -5], [4, -2], [10, 1], [4, 5], [-4, 5], [-10, 1], [-4, -2]],
+// [[-4, 2], [4, -2]],
+// [[-10, 1], [10, 1]]];
+
 const segments = [
   [-6, -9, 6, -9],
   [-6, 0, 6, 0],
@@ -34,18 +48,29 @@ const digits = [
   [0, 1, 3, 5, 6]
 ]
 
-const scalefactor = 3;
-const collisionSize = 2;
+const numRockSizes = 3;
+const rockScaleFactor = 3;
+
+const cPolyExpand = 2;
 
 const data = {
   rock: [],
   ship: [],
+  ufo: [],
 
   preload: function () {
 
+    const ufo = new Object();
+    ufo.poly = [this.factor(ufoData[0], 1)];
+
+    ufo.cPoly = [this.factor(ufoData[0], 1, cPolyExpand)];
+    ufo.box = [this.boundbox(ufo.cPoly[0])]
+    ufo.details = [ufoData[1], ufoData[2]];
+    this.ufo.push(ufo);
+
     const ship = new Object();
-    ship.raw = [this.factor(shipData[0], 1)];
-    ship.collision = [this.factor(shipData[0], 1, collisionSize)];
+    ship.raw = [shipData[0], 1];
+    ship.collision = [this.factor(shipData[0], 1, cPolyExpand)];
     ship.box = [this.boundbox(ship.collision[0])]
     ship.thrust = [shipData[1]];
     this.ship.push(ship);
@@ -55,9 +80,9 @@ const data = {
       const _raw = []
       const _col = []
       const _box = []
-      for (let i = 0; i < 3; i++) {
-        _raw.push(this.factor(row, i * scalefactor));
-        _col.push(this.factor(row, i * scalefactor, collisionSize));
+      for (let i = 0; i < numRockSizes; i++) {
+        _raw.push(this.factor(row, i * rockScaleFactor));
+        _col.push(this.factor(row, i * rockScaleFactor, cPolyExpand));
         _box.push(this.boundbox(_col[i]));
       }
       entry.raw = _raw;

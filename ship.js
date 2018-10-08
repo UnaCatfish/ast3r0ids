@@ -7,8 +7,6 @@ function Ship(x, y) {
   this.thrust = vector.create(0, 0);
   this.angle = 0;
   this.alive = true;
-  console.log(this.particle);
-
 }
 
 Ship.prototype.reset = function () {

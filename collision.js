@@ -75,6 +75,22 @@ function segmentIntersect(p0, p1, p2, p3) {
   }
 }
 
+function laserToUfo(laser, ufo) {
+  const box = ufo.getBox();
+  const pn = { x: laser.getX(), y: laser.getY() };
+  const po = { x: ufo.getX(), y: ufo.getY() };
+
+  if (
+    pn.x - po.x < box.minX || pn.x - po.x > box.maxX ||
+    pn.y - po.y < box.minY || pn.y - po.y > box.maxY) {
+    // console.log('fail');
+    return false;
+  }
+  // const polygon = asteroid.getCollision();
+  // return pnPoly(pn, polygon, po);
+  return true;
+}
+
 function lasertoAsteroid(laser, asteroid) {
   const box = asteroid.getBox();
   const pn = { x: laser.getX(), y: laser.getY() };

@@ -5,26 +5,28 @@
 // Small Saucer:      1000 points.
 
 const rock = [100, 50, 20];
+const ufo = [1000, 200];
 const ships = 3;
-let newShip = 10000;
+let newShip = 1000;
 
 function Score() {
   this.score = 0;
   this.ships = ships;
   this.newShip = newShip;
   console.log(`ships: ${this.ships}  score: ${this.score}`);
+  console.log('next new ship at ' + newShip);
 }
 
 Score.prototype.update = function (enemy, size) {
-  if (enemy == 'rock') {
-    this.score += rock[size];
-    this.newShip -= rock[size]
-  }
+  const points = (enemy == 'rock') ? rock[size] : ufo[size];
+  this.score += points;
+  this.newShip -= points;
+
   if (this.newShip <= 0) {
     this.ships += 1;
     this.newShip += newShip;
   }
-  console.log(`ships: ${this.ships}  score: ${this.score}`);
+  // console.log(`ships: ${this.ships}  score: ${this.score}`);
 }
 
 Score.prototype.removeShip = function () {
@@ -75,14 +77,5 @@ Score.prototype.draw = function (context) {
     sx -= 20;
     context.restore()
 
-
-
-
-
   }
-
-
-
-
-
 }

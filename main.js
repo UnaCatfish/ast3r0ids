@@ -11,6 +11,7 @@ window.onload = function () {
   const ship = new Ship(width / 2, height / 2);
   const score = new Score();
   const asteroids = [];
+  const ufos = [];
   const lasers = [];
   const explosions = [];
   const numRocks = 6;
@@ -28,28 +29,49 @@ window.onload = function () {
     makeRocks();
     inputInit(lasers, ship)
 
-    //////////////////
+    setTimeout(spawnUfo, 3000)
+
 
     update();
+  }
+
+  ///////////// Timed ///////////////////
+
+  function spawnUfo() {
+    if (ufos.length == 0) {
+      ufos.push(new Ufo(
+        Math.floor(Math.random() * canvas.width),
+        Math.floor(Math.random() * canvas.height)));
+
+    }
   }
 
   function respawn() {
     ship.reset();
   }
+  //////////////////////////////////
+
 
   function update() {
     context.fillRect(0, 0, width, height);
+
     ////////////////// ANIMATION Loop ////////////////////
 
     score.draw(context);
 
     for (let asteroid of asteroids) {
-      asteroid.draw(context);
       asteroid.update();
       asteroid.edges();
+      asteroid.draw(context);
     }
 
+    if (ufos.length > 0) {
+      ufos[0].draw(context);
+    }
+
+
     if (!gameOver) {
+
 
       if (ship.alive && fire) {
         {
@@ -71,7 +93,6 @@ window.onload = function () {
         // check against rocks
         if (lasers.length > 0) {
           for (let j = asteroids.length - 1; j >= 0; j--) {
-
             if (lasers[i] && lasertoAsteroid(lasers[i], asteroids[j])) {
               asteroids[j].color = 'red'
               const loc = asteroids[j].getLocation();
@@ -89,6 +110,19 @@ window.onload = function () {
               score.update('rock', size)
             }
           }
+
+          if (lasers[i] && ufos[0] && laserToUfo(lasers[i], ufos[0])) {
+            const loc = ufos[0].getLocation();
+            // const size = ufos[0].getSize();
+            score.update('ufo', 1)
+            ufos.splice(0, 1);
+            lasers.splice(i, 1);
+            explosions.push(new Explosion(loc, 0));
+            const st = Math.random() * 15000 + 15000;
+            console.log(Math.round(st / 1000));
+            setTimeout(spawnUfo, st);
+          }
+
         }
       }
 
@@ -110,6 +144,7 @@ window.onload = function () {
               ship.alive = false;
               score.removeShip();
               setTimeout(respawn, respawnTime)
+              fire = false;
               break;
             }
           }
@@ -144,6 +179,8 @@ window.onload = function () {
     /////////////////////// End Loop /////////////////////// 
     requestAnimationFrame(update);
   }
+
+
 
   function makeRocks() {
     for (let i = 0; i < numRocks; i++) {
