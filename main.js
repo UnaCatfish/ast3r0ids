@@ -2,7 +2,7 @@
 const debug = false;
 const showCollide = false;
 let gameOver = false;
-let rockSpeed = 0.2;
+let rockSpeed = 0.3;
 
 window.onload = function () {
   const canvas = document.getElementById('canvas');
@@ -78,7 +78,6 @@ window.onload = function () {
           ufos[0].getLaserLoc(), false));
       }
     }
-
 
     if (!gameOver) {
 
@@ -206,8 +205,6 @@ window.onload = function () {
     requestAnimationFrame(update);
   }
 
-
-
   function makeRocks() {
     for (let i = 0; i < numRocks; i++) {
 
@@ -225,8 +222,6 @@ window.onload = function () {
         ax = canvas.width;
         ay = Math.floor(Math.random() * canvas.height);
       }
-
-
 
       ///////////////////////////////////////////////////////
       asteroids.push(new Asteroid(ax, ay));

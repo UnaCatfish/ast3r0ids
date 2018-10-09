@@ -10,7 +10,7 @@ const ships = 3;
 let newShip = 10000;
 
 function Score() {
-  this.score = 0;
+  this.score = '00';
   this.ships = ships;
   this.newShip = newShip;
   console.log(`ships: ${this.ships}  score: ${this.score}`);
@@ -18,6 +18,9 @@ function Score() {
 }
 
 Score.prototype.update = function (enemy, size) {
+  if (this.score == '00') {
+    this.score = 0;
+  }
   const points = (enemy == 'rock') ? rock[size] : ufo[size];
   this.score += points;
   this.newShip -= points;
@@ -42,24 +45,12 @@ Score.prototype.removeShip = function () {
 }
 
 Score.prototype.draw = function (context) {
-  let sc = this.score
-  let loop = sc.toString().length || 1;
-  let nx = 200;
-  let ny = 14;
-  for (i = loop - 1; i >= 0; i--) {
-    const digit = digits[sc % 10];
-    context.save();
-    context.translate(nx, ny);
-    for (let seg of digit) {
-      context.beginPath();
-      context.moveTo(segments[seg][0], segments[seg][1]);
-      context.lineTo(segments[seg][2], segments[seg][3]);
-      context.stroke();
-    }
-    context.restore()
-    nx -= 18;
-    sc = Math.floor(sc / 10);
-  }
+  const spacing = 18;
+  const x = 200;
+  const y = 24;
+
+  const text = new Text(this.score.toString(), 3.1, spacing, x, y);
+  text.drawRight(context);
 
   let sx = 200;
   let sy = 40;
