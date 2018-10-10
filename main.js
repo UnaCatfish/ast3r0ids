@@ -3,6 +3,7 @@ const debug = false;
 const showCollide = false;
 let gameOver = false;
 let rockSpeed = 0.3;
+const ships = 3;
 
 window.onload = function () {
   const canvas = document.getElementById('canvas');

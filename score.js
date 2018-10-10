@@ -6,7 +6,7 @@
 
 const rock = [100, 50, 20];
 const ufo = [1000, 200];
-const ships = 3;
+
 let newShip = 10000;
 
 function Score() {
